@@ -17,174 +17,97 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Who am I?
-
-## {data-background="img/iu_sample_gates.png"}
-
-## {data-background="img/uci.png"}
-
-## {data-background="img/nih_clinical_center.png"}
-
-## {data-background="img/seattle.png"}
-
 ## ![sage](img/Sage_neon_logo1.png)
 
-- Non-profit biomedical research institute
-- Founded in 2007
-- $<50$ employees
+> Non-profit biomedical research institute founded in 2007, based in Seattle, WA
 
 <br/>
 
-> We work to redefine how complex biological data is gathered, shared and used, redefining it through open systems, incentives, and norms.
+> We work to redefine how complex biological data is gathered, shared, and used through open systems, incentives, and processes.
 
 ## Our focus
 
-> Engage <span style="color: #177bad">**diverse communities**</span> of researchers around biological and analytical problems too complex for a single institution
+> Engage <span style="color: #177bad">**diverse communities**</span> of researchers around analytical problems too complex for a single institution
 
 <br/>
 
 > Empower <span style="color: #177bad">**citizens**</span> to track their own health and <span style="color: #177bad">**contribute**</span> deep phenotypic data to research topics important to them
 
-## What I do @ Sage
-
-- Community/program management and development
-- Bioinformatics best practices for sharing and reproducible research
-- Software development and testing
-- Data analysis, genomics, statistics
-
-
 ## ![synapse](img/newsynapse.png)
 
 > A platform for supporting scientific collaborations centered around shared biomedical data sets with a goal of making biomedical research more transparent, more reproducible, and more accessible to a broader audience of scientists.
 
-## Cloud-enabled collaboration {data-transition="fade" data-background='img/clouds.jpg'}
-
-![synapse](img/cloud_synapse.png)
-
 ![connect](img/connect2synapse.png)
-
-<span style='font-size: small'>https://www.flickr.com/photos/pagedooley/26698856933/</span>
 
 ## https://www.synapse.org/
 
 <img src='img/synapsehome.png' width='150%'/>
 
-> It's free!
+## Register
+
+- email me (kenneth.daily@sagebase.org), or
+- register at https://www.synapse.org/register and join the [Rally Team](https://www.synapse.org/#!Team:3367513)
+- Become a [Certified User](https://www.synapse.org/#!Quiz:Certification) to create content
+
+<span style="font-size: small">[Help with users](http://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html)</span>
 
 ## Projects
 
 > A collaborative and sharable workspace for organization and description of data and analysis.
 
-http://docs.synapse.org/articles/making_a_project.html
+<img src="img/wiki.png" width="80%"/>
+<br>
+<span style="font-size: small">[Help on project organization](http://docs.synapse.org/articles/making_a_project.html)</span>
 
-## Files
+## Collaborative editing
 
-> Scalable, federated cloud storage for any data files
+Use text-based formatting (markdown) to author content 
+<img src="img/wiki-edit.png" width="80%"/>
+<br>
+<span style="font-size: small">[Help on Wikis](http://docs.synapse.org/articles/wikis.html)</span>
 
-> Every file gets a unique identifier, e.g. [syn1773109](https://www.synapse.org/#!Synapse:syn1773109/)
 
-Help on [files](http://docs.synapse.org/articles/files_and_versioning.html#files)
+## Files and Folders
+
+> Cloud storage for organizing files
+
+Every file gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/#!Synapse:syn11689055/) and DOI: https://doi.org/10.7303/syn11689055
+
+<img src="img/folders.png" width="80%"/>
+<br/>
+<span style="font-size: small">[Get help with files and folders](http://docs.synapse.org/articles/getting_started.html#organizing-data-creating-files-and-folders)</span>
 
 ## Versioning
 
-> Data changes over time - can update existing files without removing or overwriting them (e.g. [syn2701943.3](https://www.synapse.org/#!Synapse:syn2701943.3))
+> Data changes over time - update files without removing or overwriting them (e.g. [syn3158499.18](https://www.synapse.org/#!Synapse:syn3158499.18))
 
-Help on [versioning](http://docs.synapse.org/articles/files_and_versioning.html#versioning)
+<img src="img/versioning.png" width="80%"/>
+<br/>
+<span style="font-size: small"> [Help with versioning](http://docs.synapse.org/articles/files_and_versioning.html#versioning)</span>
 
-## Organization
-
-> A familiar folder hierarchy - a common way to separate files by content or access control
-
-Help on [files and folders](http://docs.synapse.org/articles/getting_started.html#organizing-data-creating-files-and-folders)
-
-
-## Organziation
+## Annotations and Views
 
 <br/>
 
-User-defined annotations enables you to search for data files<br/>across folders and projects
+User-defined annotations enables you to search for data files across folders and projects
 
-Adding `cellType = fibroblast` and `dataType = rnaSeq` to some files enables a search like:
+<img src='img/annotations-file-view.png' width='100%'/>
 
-> `select id from file where`
-> `cellType=='fibroblast' and`
-> `dataType=='rnaSeq'`
+`SELECT * FROM syn11346063 WHERE assay='exomeSeq'`
+`AND tissue='frontal pole'`
 
-We can expose these queries in a user friendly way!
-
-Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)
-
-## Access control
-
-1. **Public (anonymous)** (view)
-1. **Registered** (+ download)
-1. **Certified** (+ upload)
-1. **Validated** (+ research)
-
-Help on [Accounts, Certification and Profile Validation](http://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html)
-
-## Quiz!
-
-![quiz](img/quiz.gif)
-
-1. Who already has a Synapse account?
-1. Who is already a certified user?
-
-## Register
-
-> Register at https://www.synapse.org/register
-
-> Join PCBC Team at https://doi.org/10.7303/syn8293408
-
-
-## Access control {data-background='img/share.jpg'}
-
-> Decide who you want to share with through team and user-based sharing settings (or make it public)
-
-Help on [teams](http://docs.synapse.org/articles/teams.html)
-
-<span style="font-size: small">https://www.flickr.com/photos/144152028@N08/32985596281/</span>
-
-## Access control {data-background='img/broken_lock.jpg'}
-
-- Data whose nature confers more than minimal risks of re-identification to the research participant.
-- Genetic sequence or genotype data from living individuals
-- Data from "vulnerable" populations as defined using the [Office for Human Research Protections](https://www.hhs.gov/ohrp/) guidelines
-- Data generated with restrictions or requirements for use as outlined in informed consents or legal agreements
-
-<span style="font-size: small">https://www.flickr.com/photos/slaunay/14506854261/</span>
-
-## Access control {data-background='img/broken_lock.jpg'}
-
-> Access restrictions that require reading and agreeing to terms of use or other data use agreements - may be a physical barrier (e.g., email a signed form)
-
-Help on [Conditions for use](http://docs.synapse.org/articles/access_controls.html#conditions-for-use)
-
-## Attribution
-
-> Get credit for what you've done by creating and modifying things in Synapse.
-
-<img src='img/attribution.png' width='65%' />
-
-wikipedian_protester
-
-## Attribution
-
-> Cite the work you have contributed using a DOI on anything in Synapse!
-
-![citation](img/wikipedian_protester.png)
-
-> syn1773109: https://doi.org/10.7303/syn1773109
-
-<span style="font-size: small">https://xkcd.com/285/</span>
-
+<span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
 
 ## Provenance
 
 > The place or source of origin.
-> What data or code was used to create something?
+
+What data and/or code was used to create something?
 
 <img src='img/expandProvenance.png' width='45%' />
+<br/>
+<span style="font-size: small">[Help with provenance](http://docs.synapse.org/articles/provenance.html
+)</span>
 
 ## Structured data
 
@@ -194,28 +117,35 @@ Example: [PCBC Cell Line Metadata (syn2767694)](https://www.synapse.org/#!Synaps
 
 Help on [tables](http://docs.synapse.org/articles/tables.html)
 
-## Collaborative editing (documentation, help, readmes)
+## Collaborative editing
 
-> Use text-based formatting system to author rich content describing projects, folders, and files. Can use automated solutions (like RMarkdown) as well!
+> Use text-based formatting (markdown) to author content describing projects, folders, and files. Can use automated solutions (like RMarkdown) as well!
 
-Example: [Methylation data processing: syn2233188](https://www.synapse.org/#!Synapse:syn2233188)
+Example: [syn2233188](https://www.synapse.org/#!Synapse:syn2233188)
 
 ## Discussions
 
-> Threaded forum with integration to data files
+A Threaded forum with integration to data files - durable discussions related to the project, with email notifications.
 
-[Example: Synapse Help Forum](https://www.synapse.org/#!SynapseForum:default)
+Have questions? Ask in the [sprint discussion forum]()
 
 [Help on discussion forums](http://docs.synapse.org/articles/discussion.html)
 
-## Rally 6
+## Example code
 
-<img src='img/nhlbi.jpg' width='30%' />
+```{r example, cache=TRUE, warning=FALSE, message=FALSE, echo=TRUE}
+library(synapser)
+library(tidyverse)
 
-> <span style="color: #177bad">7</span> institutions, <span style="color: #177bad">17</span> hub sites,<br/><span style="color: #177bad">64</span> cell lines (stem and differentiated)
+syn <- synLogin()
 
-- Data coordinating center (with cell processing core)
-- Analysis (with the bioinformatics core)
-- Knowledge portal (through Synapse)
-- Education and support
+d <- synTableQuery("SELECT id, name,rally,sprintNumber,sprintTitle,sprintStart,sprintEnd FROM syn11689072")$asDataFrame()
 
+d %>% select(-ROW_ID, -ROW_VERSION) %>% 
+  mutate(sprintStart=lubridate::as_datetime(sprintStart / 1000),
+         sprintEnd=lubridate::as_datetime(sprintEnd / 1000)) %>% knitr::kable()
+```
+
+## Rally 6, Sprint 6A
+
+https://www.synapse.org/hbgdki_sprint_6A (syn11689055)
