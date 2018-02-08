@@ -41,7 +41,8 @@ dataSummary <- data %>% count(Style) %>%
 
 readr::write_csv(dataSummary, path="/tmp/ramen-summary.csv")
 
-summaryFile <- File("/tmp/ramen-summary.csv", parentId="syn11801621")
+folder <- synStore(Folder("ramen-example", parentId="syn11801621"))
+summaryFile <- File("/tmp/ramen-summary.csv", parentId=folder)
 summaryFile <- synStore(summaryFile, used=ramenUrl, executed=thisFile)
 ```
 
