@@ -27,7 +27,7 @@ thisFile <- getPermlink(repo, "ramen.Rmd")
 
 Get the data from The Ramen Rater (https://www.theramenrater.com/resources-2/the-list/) to summarize.
 
-```{r cars}
+```{r readramen}
 ramenUrl <- "https://gist.githubusercontent.com/kdaily/c5b40ed3821090e876b02f0fd733e927/raw/34f40712a63f0849a940a62042c0c499fc3afb46/The-Ramen-Rater-The-Big-List.csv"
 
 data <- readr::read_csv(ramenUrl)
@@ -42,7 +42,7 @@ dataSummary <- data %>% count(Style) %>%
 readr::write_csv(dataSummary, path="/tmp/ramen-summary.csv")
 
 folder <- synStore(Folder("ramen-example", parentId="syn11801621"))
-summaryFile <- File("/tmp/ramen-summary.csv", parentId=folder)
+summaryFile <- File("/tmp/ramen-summary.csv", parentId=folder$get("id"))
 summaryFile <- synStore(summaryFile, used=ramenUrl, executed=thisFile)
 ```
 
