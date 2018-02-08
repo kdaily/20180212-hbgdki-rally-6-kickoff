@@ -35,7 +35,7 @@ data <- readr::read_csv(ramenUrl)
 
 ## Summarize
 
-```{r summarize}
+```{r summarize, message=FALSE, warning=FALSE, echo=TRUE}
 dataSummary <- data %>% count(Style) %>%
   mutate(Style=forcats::fct_reorder(factor(Style), n))
 
