@@ -1,34 +1,55 @@
 ---
 title: "HBGDKi - Rally 6 and Synapse"
-author: "Kenneth Daily<br/>Senior Scientist, Sage Bionetworks<br/>kenneth.daily@sagebase.org"
+author: "Kenneth Daily, Senior Scientist"
+contact: "kenneth.daily@sagebase.org"
 date: "2018-02-12"
 logo: "img/sage-bionetworks.png"
 output:
   revealjs::revealjs_presentation:
-    theme: night
+    theme: simple
+    template: template2.html
+    css: style.css
+    highlight: haddock
     transition: fade
     center: true
     slide_level: 2
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
 
-# ![sage](img/sage-bionetworks.png)
+# ![sage](img/sage-bionetworks.png)<br/>Science. Better.
 
-> Non-profit biomedical research institute founded in 2007, based in Seattle, WA
+## Sage Bionetworks
+
+> A non-profit biomedical research institute founded in 2007, based in Seattle, WA
 
 > We work to redefine how complex biological data is gathered, shared, and used through open systems, incentives, and processes.
 
 > Engage <span style="color: #177bad">**diverse communities**</span> of researchers around analytical problems too complex for a single institution
 
+### 
 
-# ![synapse](img/newsynapse.png)
+# [Synapse](https://www.synapse.org) is a platform for supporting collaborative research.
 
 ## ![synapse](img/newsynapse.png)
 
-> A platform for supporting scientific collaborations centered around shared biomedical data sets with a goal of making biomedical research more transparent, more reproducible, and more accessible to a broader audience of scientists.
+A platform for supporting collaborations centered around shared data sets with a goal of making research more transparent, reproducible, and accessible to a broader audience.
+
+## Getting started
+
+- email me (kenneth.daily@sagebase.org)
+- gets you on the [Rally Team](https://www.synapse.org/#!Team:3367513)
+
+Then:
+
+- become a [Certified User](https://www.synapse.org/#!Quiz:Certification) to create content
+- go to https://www.synapse.org/hbgdki_sprint_6A (syn11689055)
+
+<span style="font-size: small">[Help with users](http://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html)</span>
+
+## How you can use Synapse
 
 ![connect](img/connect2synapse.png)
 
@@ -36,21 +57,25 @@ knitr::opts_chunk$set(echo = FALSE)
 
 <img src='img/synapsehome.png' width='150%'/>
 
-## Register
+## Synapse R client, [synapser](https://github.com/Sage-Bionetworks/synapser)
 
-- email me (kenneth.daily@sagebase.org), or
-- register at https://www.synapse.org/register and join the [Rally Team](https://www.synapse.org/#!Team:3367513)
-- Become a [Certified User](https://www.synapse.org/#!Quiz:Certification) to create content
+> Under development!
 
-<span style="font-size: small">[Help with users](http://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html)</span>
+```{r eval=FALSE}
+install.packages("synapser", 
+                 repos=c("https://sage-bionetworks.github.io/staging-ran",
+                         "http://cran.fhcrc.org"))
+```
 
-# Synapse organization
+[Getting help with the Synapse R client](http://sage-bionetworks.github.io/synapser/)
+
+(also a Python + command line client via `pip install synapseclient`)
+
+# Projects: collaborative and sharable workspaces for organization and description of data and analysis.
 
 ## Projects
 
-> A collaborative and sharable workspace for organization and description of data and analysis.
-
-<img src="img/wiki.png" width="80%"/>
+<img src="img/wiki.png" width="90%"/>
 <br>
 <span style="font-size: small">[Help on project organization](http://docs.synapse.org/articles/making_a_project.html)</span>
 
@@ -58,36 +83,70 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r createproject, eval=FALSE}
 library(synapser)
-syn <- synLogin()
+syn <- synLogin(silent=TRUE)
 
-myProject <- Project(name="My new fancy project")
+myProject <- Project(name="My new fancy project with a unique name")
 myProject <- synStore(myProject)
 ```
 
-## Collaborative editing
+# Wikis: collaborative editing with text-based formatting (markdown) to author content.
 
-Use text-based formatting (markdown) to author content 
-<img src="img/wiki-edit.png" width="80%"/>
+## Wikis
+
+<img src="img/wiki-edit.png" width="90%"/>
 <br>
 <span style="font-size: small">[Help on Wikis](http://docs.synapse.org/articles/wikis.html)</span>
 
-# Files and Folders
+Wikis can be created for Projects, Files, and Folders, often to act as `README`-type documentation.
+
+## Automated content creation
+
+Use RMarkdown to generate content that can be pushed to Synapse Wiki pages.
+
+See [Ramen Example](https://github.com/kdaily/20180212-hbgdki-rally-6-kickoff/blob/master/ramen.Rmd).
+
+See the [Ramen example output on Synapse](https://www.synapse.org/#!Synapse:syn11801878).
+
+# Files and Folders: cloud storage for organizing files.
 
 ## Files and Folders
 
-> Cloud storage for organizing files
+Everything gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/#!Synapse:syn11689055/) and DOI: https://doi.org/10.7303/syn11689055 (most current version)
 
-Every file gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/#!Synapse:syn11689055/) and DOI: https://doi.org/10.7303/syn11689055 (most current version)
-
-<img src="img/folders.png" width="80%"/>
+<img src="img/folders.png" width="90%"/>
 <br/>
 <span style="font-size: small">[Get help with files and folders](http://docs.synapse.org/articles/getting_started.html#organizing-data-creating-files-and-folders)</span>
 
-# Versioning
+
+## File and Folder example
+```{r eval=FALSE}
+library(synapser)
+syn <- synLogin(silent=TRUE)
+
+d <- data.frame(a=rnorm(100))
+write.csv(d, file = "/tmp/foo.csv")
+
+folder <- synStore(Folder('my folder', parent="syn11801621"))
+f <- synStore(File("/tmp/foo.csv", parent=folder))
+```
+
+## Download example
+
+Downloading caches locally so subsequent `synGet`s are local *unless* file has changed.
+
+```{r eval=FALSE}
+library(synapser)
+syn <- synLogin(silent=TRUE)
+
+myFile <- synGet('syn11689055')
+d <- readr::read_csv(myFile$path)
+```
+
+# Versioning: update files without removing or overwriting them.
 
 ## Versioning
 
-> Update files without removing or overwriting them (e.g. [syn3158499.18](https://www.synapse.org/#!Synapse:syn3158499.18))
+Version 18 of `testdata.csv`, stored at [syn3158499.18](https://www.synapse.org/#!Synapse:syn3158499.18)
 
 <img src="img/versioning.png" width="80%"/>
 <br/>
@@ -97,71 +156,97 @@ Every file gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/
 
 ```{r eval=FALSE}
 library(synapser)
-syn <- synLogin()
+syn <- synLogin(silent=TRUE)
 
 d <- data.frame(a=rnorm(100))
 write.csv(d, file = "/tmp/foo.csv")
-
-# Version 1
-f <- synStore(File("/tmp/foo.csv", parent="syn11801621"))
 
 # New data, same file location - md5 will have changed, so make a new version
 d <- data.frame(a=rnorm(100))
 write.csv(d, file = "/tmp/foo.csv")
 
 # Version 2
-f <- synStore(File("/tmp/foo.csv", parent="syn11801621"))
+folder <- synStore(Folder('my folder', parent="syn11801621"))
+f <- synStore(File("/tmp/foo.csv", parent=folder))
 
 ```
 
-
-## Structured data
-
-> Tabular data files (spreadsheets)
-
-Example: [PCBC Cell Line Metadata (syn2767694)](https://www.synapse.org/#!Synapse:syn2767694/tables/)
-
-Help on [tables](http://docs.synapse.org/articles/tables.html)
-
-# Annotations
+# Annotations: User-defined values enables search for files across folders and projects
 
 ## Annotations
 
-User-defined annotations enables you to search for data files across folders and projects
+Not good: `filename: sample1-replication1-2018_02_12-v2.csv`
+
+Better: `filename: my-filename-doesnt-matter-20180212.csv`<br/>with attributes<br/>`{'sample': 1, replication: 1, date: '2018-02-12'}`<br/>versioning managed by Synapse
+
+## Annotations
+
+Versioned files can be annotated and then exposed for search and discovery through [file views](http://docs.synapse.org/articles/view.html).
 
 <img src='img/annotations-file-view.png' width='100%'/>
 
 <span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
+
+## Annotations
+
+> Can annotate any data type in Synapse - Projects, Folders, Files, Tables
+
+## Example of annotating
+
+```{r annotate, eval=FALSE}
+library(synapser)
+library(tidyverse)
+syn <- synLogin(silent=TRUE)
+
+# Set annotations and store a file
+myFile <- File(path="testdata.csv", parent=folder,
+               annotations=list(foo=34, fileFormat="csv"))
+myFile <- synStore(myFile)
+
+# Update annotations
+myFile$annotations$foo <- 36
+myFile <- synStore(myFile)
+```
 
 ## Example query using a file view
 
 ```{r include=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
 library(synapser)
 library(tidyverse)
-
-syn <- synLogin()
+syn <- synLogin(silent=TRUE)
 
 q <- "SELECT id,name,study,tissue,assay FROM syn11346063 WHERE assay='exomeSeq' AND tissue='frontal pole'"
 
 # Query the file view
-results <- synTableQuery(q)$asDataFrame()
-
-results %>% select(-ROW_ID, -ROW_VERSION) %>% head %>% knitr::kable()
+synTableQuery(q)$asDataFrame() %>% 
+  select(-ROW_ID, -ROW_VERSION) %>% slice(1:2) %>% knitr::kable()
 ```
 
-<span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
+<span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html) and [File Views](http://docs.synapse.org/articles/views.html)</span>
+
+## Provenance: what data and/or code was used to create something?
 
 ## Provenance
-
-> The place or source of origin.
-
-What data and/or code was used to create something?
 
 <img src='img/expandProvenance.png' width='45%' />
 <br/>
 <span style="font-size: small">[Help with provenance](http://docs.synapse.org/articles/provenance.html)</span>
 
-## Discussions
+## Provenance example
+
+```{r provenance, eval=FALSE}
+dataUrl <- "https://gist.githubusercontent.com/kdaily/data.csv"
+codeUrl <- "https://gist.githubusercontent.com/kdaily/code.R"
+
+# Run code at codeUrl to generate data-summary.csv
+
+summaryFile <- File("/tmp/ramen-summary.csv", parent=folder)
+summaryFile <- synStore(summaryFile, used=ramenUrl, executed=codeUrl)
+```
+
+# Discussion forums for communication about project data
+
+## Discussion forumns
 
 A Threaded forum with integration to data files - durable discussions related to the project, with email notifications.
 
@@ -169,17 +254,10 @@ A Threaded forum with integration to data files - durable discussions related to
 
 ## Rally 6, Sprint 6A
 
-https://www.synapse.org/hbgdki_sprint_6A (syn11689055)
 
 Have questions? Ask in the [sprint discussion forum]()
 
-# Examples
-
-## Example 1
-
-See [Ramen Example](https://github.com/kdaily/20180212-hbgdki-rally-6-kickoff/blob/master/ramen.Rmd).
-
-See the [Ramen example output on Synapse](https://www.synapse.org/#!Synapse:syn11801878).
+# Other examples
 
 ## Example 2
 
@@ -187,7 +265,7 @@ See the [Ramen example output on Synapse](https://www.synapse.org/#!Synapse:syn1
 library(synapser)
 library(tidyverse)
 
-syn <- synLogin()
+syn <- synLogin(silent=TRUE)
 
 d <- synTableQuery("SELECT id, name,rally,sprintNumber,sprintTitle,sprintStart,sprintEnd FROM syn11689072")$asDataFrame()
 
