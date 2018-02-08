@@ -3,13 +3,13 @@ title: "HBGDKi - Rally 6 and Synapse"
 author: "Kenneth Daily<br/>Senior Scientist, Sage Bionetworks<br/>kenneth.daily@sagebase.org"
 contact: "github:@kdaily --- twitter:@sleight82"
 date: "2018-02-12"
-logo: "img/Sage_neon_logo1.png"
+logo: "img/sage-bionetworks.png"
 output:
   revealjs::revealjs_presentation:
     theme: night
-    template: template.html
     transition: fade
     center: true
+    slide_level: 3
     
 ---
 
@@ -17,11 +17,9 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## ![sage](img/Sage_neon_logo1.png)
+## ![sage](img/sage-bionetworks.png)
 
 > Non-profit biomedical research institute founded in 2007, based in Seattle, WA
-
-<br/>
 
 > We work to redefine how complex biological data is gathered, shared, and used through open systems, incentives, and processes.
 
@@ -66,7 +64,6 @@ Use text-based formatting (markdown) to author content
 <br>
 <span style="font-size: small">[Help on Wikis](http://docs.synapse.org/articles/wikis.html)</span>
 
-
 ## Files and Folders
 
 > Cloud storage for organizing files
@@ -93,8 +90,21 @@ User-defined annotations enables you to search for data files across folders and
 
 <img src='img/annotations-file-view.png' width='100%'/>
 
-`SELECT * FROM syn11346063 WHERE assay='exomeSeq'`
-`AND tissue='frontal pole'`
+### Example query
+
+```{r include=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+library(synapser)
+library(tidyverse)
+
+syn <- synLogin()
+
+q <- "SELECT id,name,study,tissue,assay FROM syn11346063 WHERE assay='exomeSeq' AND tissue='frontal pole'"
+
+results <- synTableQuery(q)$asDataFrame()
+
+results %>% select(-ROW_ID, -ROW_VERSION) %>% head %>% knitr::kable()
+```
+
 
 <span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
 
@@ -144,6 +154,25 @@ d <- synTableQuery("SELECT id, name,rally,sprintNumber,sprintTitle,sprintStart,s
 d %>% select(-ROW_ID, -ROW_VERSION) %>% 
   mutate(sprintStart=lubridate::as_datetime(sprintStart / 1000),
          sprintEnd=lubridate::as_datetime(sprintEnd / 1000)) %>% knitr::kable()
+```
+
+## Example code
+```{r include=FALSE, echo=TRUE, eval=FALSE}
+library(synapser)
+library(githubr)
+# setGithubToken('mytoken')
+
+# Get remote github repository for this file
+repo <- getRepo("kdaily/20180212-hbgdki-rally-6-kickoff")
+
+# Get current path to version at latest commit
+rmd <- getPermlink(repo, "presentation.Rmd")
+
+# Render as HTML
+x <- rmarkdown::render(rmd)
+
+# Store in Synapse with provenance to Github file
+f <- synStore(File(x, parentId="syn11801621"), used=rmd)
 ```
 
 ## Rally 6, Sprint 6A
