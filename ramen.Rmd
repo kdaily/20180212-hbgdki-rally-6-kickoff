@@ -23,9 +23,19 @@ repo <- getRepo("kdaily/20180212-hbgdki-rally-6-kickoff")
 thisFile <- getPermlink(repo, "ramen.Rmd")
 ```
 
-## R Markdown
 
-Get the data from The Ramen Rater (https://www.theramenrater.com/resources-2/the-list/) to summarize.
+## Introduction
+
+I was created by running:
+
+```
+synapser::synLogin()
+knit2synapse::knitfile2synapse("./ramen.Rmd", owner="syn11801878")
+```
+
+## Get some data
+
+Get the data from The [Ramen Rater](https://www.theramenrater.com/resources-2/the-list/) to summarize.
 
 ```{r readramen}
 ramenUrl <- "https://gist.githubusercontent.com/kdaily/c5b40ed3821090e876b02f0fd733e927/raw/34f40712a63f0849a940a62042c0c499fc3afb46/The-Ramen-Rater-The-Big-List.csv"
@@ -34,6 +44,8 @@ data <- readr::read_csv(ramenUrl)
 ```
 
 ## Summarize
+
+Do a basic summary and save the resulting file to Synapse. Multiple runs of this will version this file, if the content (hence, the md5) changes. Note the provenance is set using files external to Synapse, including the original remote CSV file, and the most recent commit in Github of this Markdown file. 
 
 ```{r summarize, message=FALSE, warning=FALSE, echo=TRUE}
 dataSummary <- data %>% count(Style) %>%
@@ -46,9 +58,15 @@ summaryFile <- File("/tmp/ramen-summary.csv", parent=folder)
 summaryFile <- synStore(summaryFile, used=ramenUrl, executed=thisFile)
 ```
 
+### Summary table
+
 ```{r}
 dataSummary %>% arrange(desc(n)) %>% knitr::kable()
 ```
+
+### A plot
+
+This image is added to the Wiki as a "Wiki attachment".
 
 ```{r plot, echo=FALSE}
 p <- ggplot(dataSummary, aes(x=Style, y=n))
@@ -56,3 +74,8 @@ p <- p + geom_col()
 p <- p + theme_bw()
 p
 ```
+
+```{r}
+sessionInfo()
+```
+
