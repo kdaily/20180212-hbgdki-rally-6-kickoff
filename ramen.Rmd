@@ -12,6 +12,7 @@ library(synapser)
 library(tidyverse)
 library(ggplot2)
 library(githubr)
+library(viridis)
 
 syn <- synLogin()
 
@@ -35,11 +36,22 @@ data <- readr::read_csv(ramenUrl)
 ## Summarize
 
 ```{r summarize}
-dataSummary <- data %>% count(Brand, Style)
+dataSummary <- data %>% count(Style) %>%
+  mutate(Style=forcats::fct_reorder(factor(Style), n))
+
+readr::write_csv(dataSummary, path="/tmp/ramen-summary.csv")
+
+summaryFile <- File("/tmp/ramen-summary.csv", parentId="syn11801621")
+summaryFile <- synStore(summaryFile, used=ramenUrl, executed=thisFile)
+```
+
+```{r}
+dataSummary %>% arrange(desc(n)) %>% knitr::kable()
 ```
 
 ```{r plot, echo=FALSE}
-p <- ggplot(data, aes(x=))
+p <- ggplot(dataSummary, aes(x=Style, y=n))
+p <- p + geom_col()
+p <- p + theme_bw()
+p
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
