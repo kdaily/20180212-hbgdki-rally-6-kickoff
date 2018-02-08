@@ -1,0 +1,45 @@
+---
+title: "The Ramen Rater"
+author: "Kenneth Daily"
+date: "February 7, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+
+library(synapser)
+library(tidyverse)
+library(ggplot2)
+library(githubr)
+
+syn <- synLogin()
+
+# Get remote github repository for this file
+repo <- getRepo("kdaily/20180212-hbgdki-rally-6-kickoff")
+
+# Get current path to version at latest commit
+thisFile <- getPermlink(repo, "ramen.Rmd")
+```
+
+## R Markdown
+
+Get the data from The Ramen Rater (https://www.theramenrater.com/resources-2/the-list/) to summarize.
+
+```{r cars}
+ramenUrl <- "https://gist.githubusercontent.com/kdaily/c5b40ed3821090e876b02f0fd733e927/raw/34f40712a63f0849a940a62042c0c499fc3afb46/The-Ramen-Rater-The-Big-List.csv"
+
+data <- readr::read_csv(ramenUrl)
+```
+
+## Summarize
+
+```{r summarize}
+dataSummary <- data %>% count(Brand, Style)
+```
+
+```{r plot, echo=FALSE}
+p <- ggplot(data, aes(x=))
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
