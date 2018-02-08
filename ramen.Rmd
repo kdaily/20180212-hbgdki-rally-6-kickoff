@@ -11,10 +11,17 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 library(synapser)
 library(tidyverse)
 library(ggplot2)
-library(githubr)
 library(viridis)
 
 syn <- synLogin()
+```
+
+## Introduction
+
+I was created by running:
+
+```{r}
+library(githubr)
 
 # Get remote github repository for this file
 repo <- getRepo("kdaily/20180212-hbgdki-rally-6-kickoff")
@@ -23,10 +30,7 @@ repo <- getRepo("kdaily/20180212-hbgdki-rally-6-kickoff")
 thisFile <- getPermlink(repo, "ramen.Rmd")
 ```
 
-
-## Introduction
-
-I was created by running:
+This above snippet has some procedural issues that must be followed - namely, the local file and the remote Github file must be identical, so a push to Github must be performed before this file is rendered as below.
 
 ```
 synapser::synLogin()
