@@ -1,7 +1,6 @@
 ---
 title: "HBGDKi - Rally 6 and Synapse"
 author: "Kenneth Daily<br/>Senior Scientist, Sage Bionetworks<br/>kenneth.daily@sagebase.org"
-contact: "github:@kdaily --- twitter:@sleight82"
 date: "2018-02-12"
 logo: "img/sage-bionetworks.png"
 output:
@@ -9,27 +8,23 @@ output:
     theme: night
     transition: fade
     center: true
-    slide_level: 3
-    
+    slide_level: 2
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## ![sage](img/sage-bionetworks.png)
+# ![sage](img/sage-bionetworks.png)
 
 > Non-profit biomedical research institute founded in 2007, based in Seattle, WA
 
 > We work to redefine how complex biological data is gathered, shared, and used through open systems, incentives, and processes.
 
-## Our focus
-
 > Engage <span style="color: #177bad">**diverse communities**</span> of researchers around analytical problems too complex for a single institution
 
-<br/>
 
-> Empower <span style="color: #177bad">**citizens**</span> to track their own health and <span style="color: #177bad">**contribute**</span> deep phenotypic data to research topics important to them
+# ![synapse](img/newsynapse.png)
 
 ## ![synapse](img/newsynapse.png)
 
@@ -49,6 +44,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 <span style="font-size: small">[Help with users](http://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html)</span>
 
+# Synapse organization
+
 ## Projects
 
 > A collaborative and sharable workspace for organization and description of data and analysis.
@@ -57,6 +54,16 @@ knitr::opts_chunk$set(echo = FALSE)
 <br>
 <span style="font-size: small">[Help on project organization](http://docs.synapse.org/articles/making_a_project.html)</span>
 
+## Create a project
+
+```{r createproject, eval=FALSE}
+library(synapser)
+syn <- synLogin()
+
+myProject <- Project(name="My new fancy project")
+myProject <- synStore(myProject)
+```
+
 ## Collaborative editing
 
 Use text-based formatting (markdown) to author content 
@@ -64,33 +71,69 @@ Use text-based formatting (markdown) to author content
 <br>
 <span style="font-size: small">[Help on Wikis](http://docs.synapse.org/articles/wikis.html)</span>
 
+# Files and Folders
+
 ## Files and Folders
 
 > Cloud storage for organizing files
 
-Every file gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/#!Synapse:syn11689055/) and DOI: https://doi.org/10.7303/syn11689055
+Every file gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/#!Synapse:syn11689055/) and DOI: https://doi.org/10.7303/syn11689055 (most current version)
 
 <img src="img/folders.png" width="80%"/>
 <br/>
 <span style="font-size: small">[Get help with files and folders](http://docs.synapse.org/articles/getting_started.html#organizing-data-creating-files-and-folders)</span>
 
+# Versioning
+
 ## Versioning
 
-> Data changes over time - update files without removing or overwriting them (e.g. [syn3158499.18](https://www.synapse.org/#!Synapse:syn3158499.18))
+> Update files without removing or overwriting them (e.g. [syn3158499.18](https://www.synapse.org/#!Synapse:syn3158499.18))
 
 <img src="img/versioning.png" width="80%"/>
 <br/>
 <span style="font-size: small"> [Help with versioning](http://docs.synapse.org/articles/files_and_versioning.html#versioning)</span>
 
-## Annotations and Views
+## Versioning Example
 
-<br/>
+```{r eval=FALSE}
+library(synapser)
+syn <- synLogin()
+
+d <- data.frame(a=rnorm(100))
+write.csv(d, file = "/tmp/foo.csv")
+
+# Version 1
+f <- synStore(File("/tmp/foo.csv", parent="syn11801621"))
+
+# New data, same file location - md5 will have changed, so make a new version
+d <- data.frame(a=rnorm(100))
+write.csv(d, file = "/tmp/foo.csv")
+
+# Version 2
+f <- synStore(File("/tmp/foo.csv", parent="syn11801621"))
+
+```
+
+
+## Structured data
+
+> Tabular data files (spreadsheets)
+
+Example: [PCBC Cell Line Metadata (syn2767694)](https://www.synapse.org/#!Synapse:syn2767694/tables/)
+
+Help on [tables](http://docs.synapse.org/articles/tables.html)
+
+# Annotations
+
+## Annotations
 
 User-defined annotations enables you to search for data files across folders and projects
 
 <img src='img/annotations-file-view.png' width='100%'/>
 
-### Example query
+<span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
+
+## Example query using a file view
 
 ```{r include=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
 library(synapser)
@@ -100,11 +143,11 @@ syn <- synLogin()
 
 q <- "SELECT id,name,study,tissue,assay FROM syn11346063 WHERE assay='exomeSeq' AND tissue='frontal pole'"
 
+# Query the file view
 results <- synTableQuery(q)$asDataFrame()
 
 results %>% select(-ROW_ID, -ROW_VERSION) %>% head %>% knitr::kable()
 ```
-
 
 <span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
 
@@ -116,32 +159,29 @@ What data and/or code was used to create something?
 
 <img src='img/expandProvenance.png' width='45%' />
 <br/>
-<span style="font-size: small">[Help with provenance](http://docs.synapse.org/articles/provenance.html
-)</span>
-
-## Structured data
-
-> Tabular data files (spreadsheets)
-
-Example: [PCBC Cell Line Metadata (syn2767694)](https://www.synapse.org/#!Synapse:syn2767694/tables/)
-
-Help on [tables](http://docs.synapse.org/articles/tables.html)
-
-## Collaborative editing
-
-> Use text-based formatting (markdown) to author content describing projects, folders, and files. Can use automated solutions (like RMarkdown) as well!
-
-Example: [syn2233188](https://www.synapse.org/#!Synapse:syn2233188)
+<span style="font-size: small">[Help with provenance](http://docs.synapse.org/articles/provenance.html)</span>
 
 ## Discussions
 
 A Threaded forum with integration to data files - durable discussions related to the project, with email notifications.
 
-Have questions? Ask in the [sprint discussion forum]()
-
 [Help on discussion forums](http://docs.synapse.org/articles/discussion.html)
 
-## Example code
+## Rally 6, Sprint 6A
+
+https://www.synapse.org/hbgdki_sprint_6A (syn11689055)
+
+Have questions? Ask in the [sprint discussion forum]()
+
+# Examples
+
+## Example 1
+
+See [Ramen Example](https://github.com/kdaily/20180212-hbgdki-rally-6-kickoff/blob/master/ramen.Rmd).
+
+See the [Ramen example output on Synapse](https://www.synapse.org/#!Synapse:syn11801878).
+
+## Example 2
 
 ```{r example, cache=TRUE, warning=FALSE, message=FALSE, echo=TRUE}
 library(synapser)
@@ -156,7 +196,7 @@ d %>% select(-ROW_ID, -ROW_VERSION) %>%
          sprintEnd=lubridate::as_datetime(sprintEnd / 1000)) %>% knitr::kable()
 ```
 
-## Example code
+## Example 3
 ```{r include=FALSE, echo=TRUE, eval=FALSE}
 library(synapser)
 library(githubr)
@@ -174,7 +214,3 @@ x <- rmarkdown::render(rmd)
 # Store in Synapse with provenance to Github file
 f <- synStore(File(x, parentId="syn11801621"), used=rmd)
 ```
-
-## Rally 6, Sprint 6A
-
-https://www.synapse.org/hbgdki_sprint_6A (syn11689055)
