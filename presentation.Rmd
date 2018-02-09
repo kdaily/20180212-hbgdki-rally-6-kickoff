@@ -79,16 +79,6 @@ install.packages("synapser",
 <br>
 <span style="font-size: small">[Help on project organization](http://docs.synapse.org/articles/making_a_project.html)</span>
 
-## Create a project
-
-```{r createproject, eval=FALSE}
-library(synapser)
-syn <- synLogin(silent=TRUE)
-
-myProject <- Project(name="My new fancy project with a unique name")
-myProject <- synStore(myProject)
-```
-
 # Wikis: collaborative editing with text-based formatting (markdown) to author content.
 
 ## Wikis
@@ -118,6 +108,64 @@ Everything gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/
 <span style="font-size: small">[Get help with files and folders](http://docs.synapse.org/articles/getting_started.html#organizing-data-creating-files-and-folders)</span>
 
 
+# Versioning: update files without removing or overwriting them.
+
+## Versioning
+
+Version 18 of `testdata.csv`, stored at [syn3158499.18](https://www.synapse.org/#!Synapse:syn3158499.18)
+
+<img src="img/versioning.png" width="80%"/>
+<br/>
+<span style="font-size: small"> [Help with versioning](http://docs.synapse.org/articles/files_and_versioning.html#versioning)</span>
+
+# Annotations: User-defined values enables search for files across folders and projects
+
+## Annotations
+
+Not good: `filename: sample1-replication1-2018_02_12-v2.csv`
+
+Better: `filename: my-filename-doesnt-matter-20180212.csv`<br/>with attributes<br/>`{'sample': 1, replication: 1, date: '2018-02-12'}`<br/>versioning managed by Synapse
+
+## Annotations
+
+Versioned files can be annotated and then exposed for search and discovery through [file views](http://docs.synapse.org/articles/view.html).
+
+<img src='img/annotations-file-view.png' width='100%'/>
+
+<span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
+
+## Annotations
+
+> Can annotate any data type in Synapse - Projects, Folders, Files, Tables
+
+## Provenance: what data and/or code was used to create something?
+
+## Provenance
+
+<img src='img/expandProvenance.png' width='45%' />
+<br/>
+<span style="font-size: small">[Help with provenance](http://docs.synapse.org/articles/provenance.html)</span>
+
+# Discussion forums for communication about project data
+
+## Discussion forumns
+
+A Threaded forum with integration to data files - durable discussions related to the project, with email notifications.
+
+[Help on discussion forums](http://docs.synapse.org/articles/discussion.html)
+
+# Code examples
+
+## Create a project
+
+```{r createproject, eval=FALSE}
+library(synapser)
+syn <- synLogin(silent=TRUE)
+
+myProject <- Project(name="My new fancy project with a unique name")
+myProject <- synStore(myProject)
+```
+
 ## File and Folder example
 ```{r eval=FALSE}
 library(synapser)
@@ -142,16 +190,6 @@ myFile <- synGet('syn11689055')
 d <- readr::read_csv(myFile$path)
 ```
 
-# Versioning: update files without removing or overwriting them.
-
-## Versioning
-
-Version 18 of `testdata.csv`, stored at [syn3158499.18](https://www.synapse.org/#!Synapse:syn3158499.18)
-
-<img src="img/versioning.png" width="80%"/>
-<br/>
-<span style="font-size: small"> [Help with versioning](http://docs.synapse.org/articles/files_and_versioning.html#versioning)</span>
-
 ## Versioning Example
 
 ```{r eval=FALSE}
@@ -170,26 +208,6 @@ folder <- synStore(Folder('my folder', parent="syn11801621"))
 f <- synStore(File("/tmp/foo.csv", parent=folder))
 
 ```
-
-# Annotations: User-defined values enables search for files across folders and projects
-
-## Annotations
-
-Not good: `filename: sample1-replication1-2018_02_12-v2.csv`
-
-Better: `filename: my-filename-doesnt-matter-20180212.csv`<br/>with attributes<br/>`{'sample': 1, replication: 1, date: '2018-02-12'}`<br/>versioning managed by Synapse
-
-## Annotations
-
-Versioned files can be annotated and then exposed for search and discovery through [file views](http://docs.synapse.org/articles/view.html).
-
-<img src='img/annotations-file-view.png' width='100%'/>
-
-<span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
-
-## Annotations
-
-> Can annotate any data type in Synapse - Projects, Folders, Files, Tables
 
 ## Example of annotating
 
@@ -224,14 +242,6 @@ synTableQuery(q)$asDataFrame() %>%
 
 <span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html) and [File Views](http://docs.synapse.org/articles/views.html)</span>
 
-## Provenance: what data and/or code was used to create something?
-
-## Provenance
-
-<img src='img/expandProvenance.png' width='45%' />
-<br/>
-<span style="font-size: small">[Help with provenance](http://docs.synapse.org/articles/provenance.html)</span>
-
 ## Provenance example
 
 ```{r provenance, eval=FALSE}
@@ -243,21 +253,6 @@ codeUrl <- "https://gist.githubusercontent.com/kdaily/code.R"
 summaryFile <- File("/tmp/ramen-summary.csv", parent=folder)
 summaryFile <- synStore(summaryFile, used=ramenUrl, executed=codeUrl)
 ```
-
-# Discussion forums for communication about project data
-
-## Discussion forumns
-
-A Threaded forum with integration to data files - durable discussions related to the project, with email notifications.
-
-[Help on discussion forums](http://docs.synapse.org/articles/discussion.html)
-
-## Rally 6, Sprint 6A
-
-
-Have questions? Ask in the [sprint discussion forum]()
-
-# Other examples
 
 ## Example 2
 
