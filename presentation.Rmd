@@ -7,7 +7,7 @@ logo: "img/sage-bionetworks.png"
 output:
   revealjs::revealjs_presentation:
     theme: simple
-    template: template2.html
+    template: template.html
     css: style.css
     highlight: haddock
     transition: fade
@@ -19,15 +19,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
 
-# ![sage](img/sage-bionetworks.png)<br/>Science. Better.
-
-## Sage Bionetworks
-
-> A non-profit biomedical research institute founded in 2007, based in Seattle, WA
-
-> We work to redefine how complex biological data is gathered, shared, and used through open systems, incentives, and processes.
-
-> Engage <span style="color: #177bad">**diverse communities**</span> of researchers around analytical problems too complex for a single institution
+# ![sage](img/sage-bionetworks.png)<br/>We work to redefine how complex biological data is gathered, shared, and used through open systems, incentives, and processes.
 
 ### 
 
@@ -75,7 +67,7 @@ install.packages("synapser",
 
 ## Projects
 
-<img src="img/wiki.png" width="90%"/>
+<img src="img/wiki.png" width="100%"/>
 <br>
 <span style="font-size: small">[Help on project organization](http://docs.synapse.org/articles/making_a_project.html)</span>
 
@@ -103,10 +95,9 @@ See the [Ramen example output on Synapse](https://www.synapse.org/#!Synapse:syn1
 
 Everything gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/#!Synapse:syn11689055/) and DOI: https://doi.org/10.7303/syn11689055 (most current version)
 
-<img src="img/folders.png" width="90%"/>
+<img src="img/folders.png" width="100%"/>
 <br/>
 <span style="font-size: small">[Get help with files and folders](http://docs.synapse.org/articles/getting_started.html#organizing-data-creating-files-and-folders)</span>
-
 
 # Versioning: update files without removing or overwriting them.
 
@@ -114,9 +105,31 @@ Everything gets a unique identifier, e.g. [syn11689055](https://www.synapse.org/
 
 Version 18 of `testdata.csv`, stored at [syn3158499.18](https://www.synapse.org/#!Synapse:syn3158499.18)
 
-<img src="img/versioning.png" width="80%"/>
+<img src="img/versioning.png" width="100%"/>
 <br/>
 <span style="font-size: small"> [Help with versioning](http://docs.synapse.org/articles/files_and_versioning.html#versioning)</span>
+
+# Provenance: what data and/or code was used to create something?
+
+## Provenance
+
+<img src='img/expandProvenance.png' width='45%' />
+<br/>
+<span style="font-size: small">[Help with provenance](http://docs.synapse.org/articles/provenance.html)</span>
+
+# Discussion forums for communication about project data
+
+## Discussion forums
+
+A Threaded forum with integration to data files - durable discussions related to the project, with email notifications.
+
+Ask all your questions here!
+
+https://www.synapse.org/#!Synapse:syn11689055/discussion/
+
+<img src="./img/discussion.png" width="90%" />
+
+<span style="font-size: small">[Help on discussion forums](http://docs.synapse.org/articles/discussion.html)</span>
 
 # Annotations: User-defined values enables search for files across folders and projects
 
@@ -128,31 +141,21 @@ Better: `filename: my-filename-doesnt-matter-20180212.csv`<br/>with attributes<b
 
 ## Annotations
 
-Versioned files can be annotated and then exposed for search and discovery through [file views](http://docs.synapse.org/articles/view.html).
+Things in Synapse can be annotated and then exposed for search and discovery.
 
 <img src='img/annotations-file-view.png' width='100%'/>
 
-<span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html)</span>
+<span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html) and [file views](http://docs.synapse.org/articles/view.html)</span>
 
-## Annotations
+# Getting Help
 
-> Can annotate any data type in Synapse - Projects, Folders, Files, Tables
+## Need help?
 
-## Provenance: what data and/or code was used to create something?
+http://docs.synapse.org/
 
-## Provenance
-
-<img src='img/expandProvenance.png' width='45%' />
-<br/>
-<span style="font-size: small">[Help with provenance](http://docs.synapse.org/articles/provenance.html)</span>
-
-# Discussion forums for communication about project data
-
-## Discussion forumns
-
-A Threaded forum with integration to data files - durable discussions related to the project, with email notifications.
-
-[Help on discussion forums](http://docs.synapse.org/articles/discussion.html)
+- [Getting Started](http://docs.synapse.org/articles/getting_started.html)
+- [Feature articles](http://docs.synapse.org/articles/)
+- [R client documentation](sage-bionetworks.github.io/synapser/)
 
 # Code examples
 
@@ -237,7 +240,7 @@ q <- "SELECT id,name,study,tissue,assay FROM syn11346063 WHERE assay='exomeSeq' 
 
 # Query the file view
 synTableQuery(q)$asDataFrame() %>% 
-  select(-ROW_ID, -ROW_VERSION) %>% slice(1:2) %>% knitr::kable()
+  select(-ROW_ID, -ROW_VERSION, -ROW_ETAG) %>% slice(1:2) %>% knitr::kable()
 ```
 
 <span style="font-size: small">Help on [Annotation and query](http://docs.synapse.org/articles/annotation_and_query.html) and [File Views](http://docs.synapse.org/articles/views.html)</span>
@@ -254,9 +257,11 @@ summaryFile <- File("/tmp/ramen-summary.csv", parent=folder)
 summaryFile <- synStore(summaryFile, used=ramenUrl, executed=codeUrl)
 ```
 
-## Example 2
+## View query example
 
-```{r example, cache=TRUE, warning=FALSE, message=FALSE, echo=TRUE}
+This queries a Project View - the projects have been annotated to aid in discovery.
+
+```{r example, cache=FALSE, warning=FALSE, message=FALSE, echo=TRUE}
 library(synapser)
 library(tidyverse)
 
@@ -264,13 +269,16 @@ syn <- synLogin(silent=TRUE)
 
 d <- synTableQuery("SELECT id, name,rally,sprintNumber,sprintTitle,sprintStart,sprintEnd FROM syn11689072")$asDataFrame()
 
-d %>% select(-ROW_ID, -ROW_VERSION) %>% 
+d %>% select(-ROW_ID, -ROW_VERSION, -ROW_ETAG) %>% 
   mutate(sprintStart=lubridate::as_datetime(sprintStart / 1000),
          sprintEnd=lubridate::as_datetime(sprintEnd / 1000)) %>% knitr::kable()
 ```
 
-## Example 3
-```{r include=FALSE, echo=TRUE, eval=FALSE}
+## Example using `githubr`
+
+Use [`githubr`](https://www.github.com/Sage-Bionetworks/githubr) to get most recent commit of a file, render, and link with provenance.
+
+```{r include=TRUE, echo=TRUE, eval=FALSE}
 library(synapser)
 library(githubr)
 # setGithubToken('mytoken')
