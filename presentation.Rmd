@@ -290,7 +290,7 @@ repo <- getRepo("kdaily/20180212-hbgdki-rally-6-kickoff")
 rmd <- getPermlink(repo, "presentation.Rmd")
 
 # Render as HTML
-x <- rmarkdown::render(rmd)
+x <- rmarkdown::render("./presentation.Rmd")
 
 # Store in Synapse with provenance to Github file
 f <- synStore(File(x, parentId="syn11801621"), used=rmd)
