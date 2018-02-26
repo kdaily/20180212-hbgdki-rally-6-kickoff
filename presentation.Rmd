@@ -21,8 +21,6 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 
 # ![sage](img/sage-bionetworks.png)<br/>We work to redefine how complex biological data is gathered, shared, and used through open systems, incentives, and processes.
 
-### 
-
 # [Synapse](https://www.synapse.org) is a platform for supporting collaborative research.
 
 ## ![synapse](img/newsynapse.png)
@@ -37,7 +35,9 @@ A platform for supporting collaborations centered around shared data sets with a
 Then:
 
 - become a [Certified User](https://www.synapse.org/#!Quiz:Certification) to create content
-- go to https://www.synapse.org/hbgdki_sprint_6A (syn11689055)
+<br/>
+
+Go to https://www.synapse.org/hbgdki_sprint_6A (syn11689055)
 
 <span style="font-size: small">[Help with users](http://docs.synapse.org/articles/accounts_certified_users_and_profile_validation.html)</span>
 
@@ -123,7 +123,7 @@ Version 18 of `testdata.csv`, stored at [syn3158499.18](https://www.synapse.org/
 
 A Threaded forum with integration to data files - durable discussions related to the project, with email notifications.
 
-Ask all your questions here!
+We'll use this for sprint check-ins - make sure you follow!
 
 https://www.synapse.org/#!Synapse:syn11689055/discussion/
 
@@ -156,6 +156,11 @@ http://docs.synapse.org/
 - [Getting Started](http://docs.synapse.org/articles/getting_started.html)
 - [Feature articles](http://docs.synapse.org/articles/)
 - [R client documentation](sage-bionetworks.github.io/synapser/)
+- [Rally Discussion Forum](https://www.synapse.org/#!Synapse:syn11689055/discussion/)
+
+## Presentation
+
+# This presentation is available at [syn11801622](https://www.synapse.org/#!Synapse:syn11801622).
 
 # Code examples
 
