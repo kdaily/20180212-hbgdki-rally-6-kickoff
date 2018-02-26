@@ -154,11 +154,11 @@ http://docs.synapse.org/
 - [Getting Started](http://docs.synapse.org/articles/getting_started.html)
 - [Feature articles](http://docs.synapse.org/articles/)
 - [R client documentation](sage-bionetworks.github.io/synapser/)
-- [Rally Discussion Forum](https://www.synapse.org/#!Synapse:syn11689055/discussion/)
+- [Rally Discussion Forum](https://www.synapse.org/#!Synapse:syn11855121/discussion/)
 
 ## Presentation
 
-# This presentation is available at [syn11801622](https://www.synapse.org/#!Synapse:syn11801622).
+# This presentation is available at [syn11915239](https://www.synapse.org/#!Synapse:syn11915239).
 
 # Code examples
 
